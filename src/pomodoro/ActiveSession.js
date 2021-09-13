@@ -1,23 +1,29 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
+import { secondsToDuration, minutesToDuration } from "../utils/duration";
 
-const ActiveSession = ({session}) => {
-  return (
+const ActiveSession = ({focusDuration, breakDuration, session}) => {
+  const totalDuration = session?.label === "Focusing" ? focusDuration : breakDuration;
+  const durationInSecs = totalDuration * 60;
+
+  const progress = ((durationInSecs - session?.timeRemaining) / durationInSecs) * 100;
+
+  return session && (
     <>
-      {/* TODO: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
+      {/* DONE: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
       <div className="row mb-2">
         <div className="col">
-          {/* TODO: Update message below to include current session (Focusing or On Break) total duration */}
+          {/* DONE: Update message below to include current session (Focusing or On Break) total duration */}
           <h2 data-testid="session-title">
-            {session?.label} for 25:00 minutes
+            {session?.label} for {minutesToDuration(totalDuration)} minutes
           </h2>
-          {/* TODO: Update message below correctly format the time remaining in the current session */}
+          {/* DONE: Update message below correctly format the time remaining in the current session */}
           <p className="lead" data-testid="session-sub-title">
-            {session?.timeRemaining} remaining
+            {secondsToDuration(session?.timeRemaining)} remaining
           </p>
         </div>
       </div>
-      <ProgressBar />
+      <ProgressBar session={session} progress={progress} />
     </>
   );
 }

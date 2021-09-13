@@ -1,7 +1,7 @@
 import React from 'react';
 
-const ProgressBar = () => {
-  return (
+const ProgressBar = ({session, progress}) => {
+  return session && (
     <div className="row mb-2">
       <div className="col">
         <div className="progress" style={{ height: "20px" }}>
@@ -10,8 +10,8 @@ const ProgressBar = () => {
             role="progressbar"
             aria-valuemin="0"
             aria-valuemax="100"
-            aria-valuenow="0" // TODO: Increase aria-valuenow as elapsed time increases
-            style={{ width: "0%" }} // TODO: Increase width % as elapsed time increases
+            aria-valuenow={progress} // TODO: Increase aria-valuenow as elapsed time increases
+            style={{ width: `${progress}%` }} // TODO: Increase width % as elapsed time increases
           />
         </div>
       </div>

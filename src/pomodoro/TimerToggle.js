@@ -1,6 +1,7 @@
 import React from "react";
 
-const TimerToggle = ({playPause, classNames, isTimerRunning}) => {
+const TimerToggle = (props) => {
+  const {session, playPause, classNames, isTimerRunning, onToggleStop} = props;
   return (
     <div className="col">
       <div
@@ -30,6 +31,8 @@ const TimerToggle = ({playPause, classNames, isTimerRunning}) => {
           className="btn btn-secondary"
           data-testid="stop"
           title="Stop the session"
+          onClick={onToggleStop}
+          disabled={!session}
         >
           <span className="oi oi-media-stop" />
         </button>

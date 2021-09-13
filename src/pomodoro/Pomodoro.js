@@ -18,9 +18,10 @@ import ActiveSession from "./ActiveSession";
  */
 function nextTick(prevState) {
   const timeRemaining = Math.max(0, prevState.timeRemaining - 1);
+
   return {
     ...prevState,
-    timeRemaining,
+    timeRemaining
   };
 }
 
@@ -42,25 +43,49 @@ function nextSession(focusDuration, breakDuration) {
       return {
         label: "On Break",
         timeRemaining: breakDuration * 60,
+        progress: 0
       };
     }
     return {
       label: "Focusing",
       timeRemaining: focusDuration * 60,
+      progress: 0
     };
   };
 }
 
 function Pomodoro() {
-  // Timer starts out paused
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  // The current session - null where there is no session running
   const [session, setSession] = useState(null);
+  const [focusDuration, setFocusDuration] = useState(25);
+  const [breakDuration, setBreakDuration] = useState(5);
 
-  // ToDo: Allow the user to adjust the focus and break duration.
-  const focusDuration = 25;
-  const breakDuration = 5;
+  const onIncreaseFocus = () => {
+    if (focusDuration === 60) return;
+    setFocusDuration(focusDuration + 5);
+  };
 
+  const onDecreaseFocus = () => {
+    if (focusDuration === 5) return;
+    setFocusDuration(focusDuration - 5);
+  };
+
+  const onIncreaseBreak = () => {
+    if (breakDuration === 15) return;
+    setBreakDuration(breakDuration + 1);
+  };
+
+  const onDecreaseBreak = () => {
+    if (breakDuration === 1) return;
+    setBreakDuration(breakDuration - 1);
+  };
+
+  const onToggleStop = () => {
+    setIsTimerRunning(false);
+    setSession(null);
+  }
+
+ 
   /**
    * Custom hook that invokes the callback function every second
    *
@@ -82,6 +107,7 @@ function Pomodoro() {
   function playPause() {
     setIsTimerRunning((prevState) => {
       const nextState = !prevState;
+
       if (nextState) {
         setSession((prevStateSession) => {
           // If the timer is starting and the previous session is null,
@@ -89,12 +115,13 @@ function Pomodoro() {
           if (prevStateSession === null) {
             return {
               label: "Focusing",
-              timeRemaining: focusDuration * 60,
+              timeRemaining: focusDuration * 60
             };
           }
           return prevStateSession;
         });
       }
+
       return nextState;
     });
   }
@@ -102,18 +129,34 @@ function Pomodoro() {
   return (
     <div className="pomodoro">
       <div className="row">
-        <FocusDuration />
-        <BreakDuration />
+        <FocusDuration 
+          session={session}
+          focusDuration={focusDuration}
+          onIncreaseFocus={onIncreaseFocus}
+          onDecreaseFocus={onDecreaseFocus}
+        />
+        <BreakDuration 
+          session={session}
+          breakDuration={breakDuration}
+          onIncreaseBreak={onIncreaseBreak}
+          onDecreaseBreak={onDecreaseBreak}
+        />
       </div>
       <div className="row">
         <TimerToggle 
+          session={session}
           playPause={playPause} 
+          onToggleStop={onToggleStop}
           classNames={classNames} 
           isTimerRunning={isTimerRunning} 
         />
       </div>
       <div>
-        <ActiveSession session={session} />
+        <ActiveSession 
+          session={session} 
+          breakDuration={breakDuration}
+          focusDuration={focusDuration}
+        />
       </div>
     </div>
   );
