@@ -1,3 +1,5 @@
+//MediaControls.js
+
 import React from "react";
 
 const MediaControls = (props) => {

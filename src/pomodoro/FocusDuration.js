@@ -1,5 +1,7 @@
+// FocusDuration.js
+
 import React from "react";
-import { minutesToDuration } from "../utils/duration";
+import { minutesToDuration } from '../utils/duration'
 
 const FocusDuration = ({session, focusDuration, onIncreaseFocus, onDecreaseFocus}) => {
 

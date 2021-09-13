@@ -1,3 +1,5 @@
+// BreakDuration.js
+
 import React from 'react';
 import { minutesToDuration } from '../utils/duration';
 

@@ -1,3 +1,5 @@
+//ProgressBar.js
+
 import React from 'react';
 
 const ProgressBar = ({session, progress}) => {

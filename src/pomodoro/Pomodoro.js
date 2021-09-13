@@ -1,3 +1,5 @@
+// Pomodoro.js
+
 import React, { useState } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
@@ -121,6 +123,7 @@ function Pomodoro() {
           return prevStateSession;
         });
       }
+
       return nextState;
     });
   }
