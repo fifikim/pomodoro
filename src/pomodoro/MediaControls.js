@@ -1,7 +1,7 @@
 import React from "react";
 
-const TimerToggle = (props) => {
-  const {session, playPause, classNames, isTimerRunning, onToggleStop} = props;
+const MediaControls = (props) => {
+  const {session, playPause, classNames, isTimerRunning, onStop} = props;
   return (
     <div className="col">
       <div
@@ -24,14 +24,12 @@ const TimerToggle = (props) => {
             })}
           />
         </button>
-        {/* TODO: Implement stopping the current focus or break session. and disable the stop button when there is no active session */}
-        {/* TODO: Disable the stop button when there is no active session */}
         <button
           type="button"
           className="btn btn-secondary"
           data-testid="stop"
           title="Stop the session"
-          onClick={onToggleStop}
+          onClick={onStop}
           disabled={!session}
         >
           <span className="oi oi-media-stop" />
@@ -41,4 +39,4 @@ const TimerToggle = (props) => {
   );
 }
 
-export default TimerToggle;
+export default MediaControls;

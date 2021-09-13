@@ -3,7 +3,7 @@ import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
 import FocusDuration from "./FocusDuration";
 import BreakDuration from "./BreakDuration";
-import TimerToggle from "./TimerToggle";
+import MediaControls from "./MediaControls";
 import ActiveSession from "./ActiveSession";
 
 // These functions are defined outside of the component to insure they do not have access to state
@@ -80,7 +80,7 @@ function Pomodoro() {
     setBreakDuration(breakDuration - 1);
   };
 
-  const onToggleStop = () => {
+  const onStop = () => {
     setIsTimerRunning(false);
     setSession(null);
   }
@@ -121,7 +121,6 @@ function Pomodoro() {
           return prevStateSession;
         });
       }
-
       return nextState;
     });
   }
@@ -143,10 +142,10 @@ function Pomodoro() {
         />
       </div>
       <div className="row">
-        <TimerToggle 
+        <MediaControls
           session={session}
           playPause={playPause} 
-          onToggleStop={onToggleStop}
+          onStop={onStop}
           classNames={classNames} 
           isTimerRunning={isTimerRunning} 
         />
