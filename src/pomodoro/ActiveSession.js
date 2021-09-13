@@ -4,12 +4,7 @@ import React from "react";
 import ProgressBar from "./ProgressBar";
 import { secondsToDuration, minutesToDuration } from "../utils/duration";
 
-const ActiveSession = ({focusDuration, breakDuration, session}) => {
-  const totalDuration = session?.label === "Focusing" ? focusDuration : breakDuration;
-  const durationInSecs = totalDuration * 60;
-
-  const progress = ((durationInSecs - session?.timeRemaining) / durationInSecs) * 100;
-
+const ActiveSession = ({totalDuration, progress, session}) => {
   return session && (
     <>
       <div className="row mb-2">

@@ -45,13 +45,11 @@ function nextSession(focusDuration, breakDuration) {
       return {
         label: "On Break",
         timeRemaining: breakDuration * 60,
-        progress: 0
       };
     }
     return {
       label: "Focusing",
       timeRemaining: focusDuration * 60,
-      progress: 0
     };
   };
 }
@@ -87,6 +85,9 @@ function Pomodoro() {
     setSession(null);
   }
 
+  const totalDuration = session?.label === "Focusing" ? focusDuration : breakDuration;
+  const durationInSecs = totalDuration * 60;
+  const progress = ((durationInSecs - session?.timeRemaining) / durationInSecs) * 100;
  
   /**
    * Custom hook that invokes the callback function every second
@@ -156,8 +157,8 @@ function Pomodoro() {
       <div>
         <ActiveSession 
           session={session} 
-          breakDuration={breakDuration}
-          focusDuration={focusDuration}
+          progress={progress}
+          totalDuration={totalDuration}
         />
       </div>
     </div>
